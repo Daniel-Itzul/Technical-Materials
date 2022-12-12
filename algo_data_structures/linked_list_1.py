@@ -134,7 +134,7 @@ class Linked_List:
     def merge_sort_ascending(self):
         result_list = Linked_List()
         if self.length <= 1:
-            retur`n self
+            return self
         left_half, right_half = split(self)
         left = left_half.merge_sort_ascending()
         right = right_half.merge_sort_ascending()
