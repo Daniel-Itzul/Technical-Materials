@@ -1,6 +1,3 @@
-import time
-import utilities
-
 class Node:
     def __init__(self,data):
         self.data = data
@@ -10,11 +7,11 @@ class Node:
         return value
          
 class Linked_List:
- #    linked_list = []
-    length = 0 
+
     def __init__(self):
         self.head = None
         self.tail = None
+        self.length = 0
 
     def add_first_node(self, value):
         node = Node(value)
@@ -30,7 +27,8 @@ class Linked_List:
             node.next_node = self.head
             self.head = node
             self.length += 1
-     
+
+
     def insert(self, index, value):
         if index > self.length -1:
             return "Index not in list"
@@ -65,7 +63,8 @@ class Linked_List:
             linked_list.append(current.data)
             current = current.next_node
         return linked_list
-     
+
+    # Iterate O(n) 
     def find_index(self, index):
         current = self.head
         if index > self.length -1:
@@ -76,6 +75,7 @@ class Linked_List:
                 current = current.next_node
         return op_index
      
+    # Iterate O(n) 
     def del_index(self, index):
         if index > self.length -1:
             return "Index not in list"
@@ -84,7 +84,8 @@ class Linked_List:
             op_node.next_node = op_node.next_node.next_node
         else:
             self.head = self.head.next_node
-     
+    
+    # Iterate O(n) 
     def reverse(self):
         new_list = Linked_List()
         current = self.head
@@ -94,6 +95,7 @@ class Linked_List:
             current = current.next_node
         return new_list
 
+     # Iterate O(n) 
     def slice(self, startIndex, endIndex):
         if startIndex < 0 or startIndex > self.length -1 or endIndex > self.length:
             raise Exception("Index out of range")
@@ -104,7 +106,13 @@ class Linked_List:
             currentNode = currentNode.next_node
         return resultList
             
-    
+    """
+    Components
+        Iterate O(n)
+        Split O(n)^2
+        merge O(n)
+    """
+
     def merge_sort_descending(self):
         result_list = Linked_List()
         if self.length <= 1:
@@ -124,18 +132,36 @@ class Linked_List:
         return merge_ascending(left, right)
 
 ## Utility functions
+
+"""
+Components
+    FindIndex O(n)
+    O(n)
+"""
 def split(sourceList):
     if sourceList.length <= 1:
         left = sourceList
         right = None
     else:
-        midNode = sourceList.find_index(sourceList.length//2)
+        midIndex = sourceList.length//2
+        midNode = sourceList.find_index(midIndex-1)
         left = sourceList
         right = Linked_List()
         right.head = midNode.next_node
         midNode.next_node = None
+        if left.length > 2:
+            right.length = left.length - midIndex
+            left.length = midIndex 
+        else:
+            left.length = 1
+            right.length = 1
     return (left, right)
 
+"""
+Components
+    Iterate O(n)
+    0(n)
+"""
 def merge_descending(left, right):
     result = Linked_List()
     currentL = left.head
@@ -159,6 +185,12 @@ def merge_descending(left, right):
         currentR = currentR.next_node
     return result
 
+
+"""
+Components
+    Iterate O(n)
+    O(n)
+"""
 def merge_ascending(left, right):
     result = Linked_List()
     currentL = left.head
@@ -180,6 +212,8 @@ def merge_ascending(left, right):
         valueR = currentR.data
         result.append(valueR)
         currentR = currentR.next_node
+    #print("values exiting are {}".format(result.get_values()))
+    #print("length of result is".format(result.length))
     return result
 
 def create_sample(data):
@@ -187,18 +221,3 @@ def create_sample(data):
     for element in data:
         result.append(element)
     return result
-
-
-
-"""
-
-"""
-
-if __name__ == "__main__":
-    array = utilities.generate_list(10)
-    list = create_sample(array)
-    begining = time.perf_counter_ns()
-    test = list.merge_sort_ascending()
-    end = time.perf_counter_ns()
-    print(test.get_values())
-    print((end - begining)/1e6)

@@ -20,7 +20,8 @@ class Linked_List:
         node.next_node = self.head
         self.head = node
         self.length += 1
-     
+    
+    # linear due to search index
     def add_index(self, index, value):
         if index > self.length -1:
             return "Index not in list"
@@ -33,6 +34,8 @@ class Linked_List:
         else:
             self.add_head(value)
 
+
+    #linear due to find tail
     def add_tail(self, value):
         node = Node(value)
         if self.is_empty():
@@ -42,6 +45,7 @@ class Linked_List:
             op_node.next_node = node
             self.length += 1
      
+     #linear
     def find_tail(self):
         current = self.head
         if self.is_empty():
@@ -57,6 +61,7 @@ class Linked_List:
     def list_len(self):
         return self.length
      
+    # Linear
     def get_values(self):
         current = self.head
         linked_list = []
@@ -64,7 +69,8 @@ class Linked_List:
             linked_list.append(current.data)
             current = current.next_node
         return linked_list
-     
+    
+    #Linear due to iteration
     def find_index(self, index):
         current = self.head
         if index > self.length -1:
@@ -74,7 +80,8 @@ class Linked_List:
                 op_index = current
                 current = current.next_node
         return op_index
-     
+    
+    # linear due to find index
     def del_index(self, index):
         if index > self.length -1:
             return "Index not in list"
@@ -83,7 +90,8 @@ class Linked_List:
             op_node.next_node = op_node.next_node.next_node
         else:
             self.head = self.head.next_node
-     
+    
+    # linear due to traversing
     def reverse(self):
         new_list = Linked_List()
         current = self.head
@@ -92,7 +100,13 @@ class Linked_List:
             new_list.add_head(value)
             current = current.next_node
         return new_list
-
+    
+    """
+    Components 
+    - Find Index O(n)
+    - Add Tail O(n)
+    O(n)^2
+    """
     def slice(self, startIndex, endIndex):
         if startIndex < 0 or startIndex > self.length -1 or endIndex > self.length:
             raise Exception("Index out of range")
@@ -102,8 +116,15 @@ class Linked_List:
             resultList.add_tail(currentNode.data)
             currentNode = currentNode.next_node
         return resultList
-            
+
     
+    """
+    Components 
+    - Iterate Log O(log(n))
+    - Split O(n)^4
+    - Merge O(n)^2
+    O(log(n) (n)^6)
+    """  
     def merge_sort_descending(self):
         result_list = Linked_List()
         if self.length <= 1:
@@ -123,11 +144,27 @@ class Linked_List:
         return merge_ascending(left, right)
 
 ## Utility functions
+
+"""
+Components
+    Slice O(n)^2
+    Slice O(n)^2
+    O(n)^4
+"""
 def split(sourceList):
     midpoint = sourceList.length//2
     left = sourceList.slice(0,midpoint)
     right = sourceList.slice(midpoint,sourceList.length)
     return (left, right)
+
+
+
+"""
+Components
+    Iterate O(n)
+    Add Tail O(n)
+    O(n)^2
+"""
 
 def merge_descending(left, right):
     result = Linked_List()
@@ -152,6 +189,12 @@ def merge_descending(left, right):
         currentR = currentR.next_node
     return result
 
+"""
+Components
+    Iterate O(n)
+    Add Tail O(n)
+    O(n)^2
+"""
 def merge_ascending(left, right):
     result = Linked_List()
     currentL = left.head
