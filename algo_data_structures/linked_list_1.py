@@ -112,8 +112,8 @@ class Linked_List:
     Components
         Iterate O(log(n))
         Split O(n)^2
-        Append O(1)
-        O(log(n) n^2)
+        Merge O(n)
+        O(log(n) n^3)
     """
     def merge_sort_descending(self):
         result_list = Linked_List()
@@ -128,8 +128,8 @@ class Linked_List:
     Components
         Iterate O(log(n))
         Split O(n)^2
-        Append O(1)
-        O(log(n) n^2)
+        Merge O(n)
+        O(log(n) n^3)
     """
     def merge_sort_ascending(self):
         result_list = Linked_List()
